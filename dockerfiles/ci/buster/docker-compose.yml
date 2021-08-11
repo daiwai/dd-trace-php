@@ -7,6 +7,15 @@ services:
     build:
       context: .
 
+  php-8.1:
+    image: datadog/dd-trace-ci:php-8.1_buster
+    build:
+      context: ./php-8.1
+      args:
+        phpVersion: 8.1
+        phpTarGzUrl: https://downloads.php.net/~ramsey/php-8.1.0beta2.tar.gz
+        phpSha256Hash: fa01ebf8e1d06fdef0eb0cd41093f1c27d8fd10073c00aa1c36c88bcde67d9c7
+
   php-8.0:
     image: datadog/dd-trace-ci:php-8.0_buster
     build:

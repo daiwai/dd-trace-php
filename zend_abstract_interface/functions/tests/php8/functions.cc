@@ -52,8 +52,7 @@ TEST_CASE("call function: array arg (internal)", "[zai_functions]") {
     ZAI_SAPI_ABORT_ON_BAILOUT_OPEN()
 
     zval arg = {0};
-    ZVAL_NEW_ARR(&arg);
-    zend_hash_init(Z_ARRVAL(arg), 8, NULL, NULL, /* persistent */ 0);
+    array_init(&arg);
 
     zval item0 = {0};
     zval item1 = {0};

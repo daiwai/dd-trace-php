@@ -81,7 +81,12 @@ int dd_execute_php_file(const char *filename) {
             if (get_DD_TRACE_DEBUG() && PG(last_error_message) && eh.message != PG(last_error_message)) {
                 char *error;
                 error = ZSTR_VAL(PG(last_error_message));
-                ddtrace_log_errf("Error raised in request init hook: %s in %s on line %d", error, PG(last_error_file),
+#if PHP_VERSION_ID < 80100
+                char *error_filename = PG(last_error_file);
+#else
+                char *error_filename = ZSTR_VAL(PG(last_error_file));
+#endif
+                ddtrace_log_errf("Error raised in request init hook: %s in %s on line %d", error, error_filename,
                                  PG(last_error_lineno));
             }
 
@@ -104,6 +109,9 @@ int dd_execute_php_file(const char *filename) {
     } else {
         ddtrace_maybe_clear_exception();
         ddtrace_log_debugf("Error opening request init hook: %s", filename);
+#if PHP_VERSION_ID >= 80100
+        zend_destroy_file_handle(&file_handle);
+#endif
     }
     CG(multibyte) = _original_cg_multibyte;
 

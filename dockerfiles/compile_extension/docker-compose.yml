@@ -118,3 +118,17 @@ services:
     command: build-dd-trace-php
     volumes:
       - ../../:/app
+
+  8.1-alpine:
+    image: datadog/dd-trace-ci:php-compile-extension-alpine-8.1
+    build:
+      context: .
+      dockerfile: Dockerfile_alpine
+      args:
+        php_version: 8.1.0-beta2
+        php_sha: fa01ebf8e1d06fdef0eb0cd41093f1c27d8fd10073c00aa1c36c88bcde67d9c7
+        php_api: 20201009
+        php_url: https://downloads.php.net/~ramsey/php-8.1.0beta2.tar.gz
+    command: build-dd-trace-php
+    volumes:
+      - ../../:/app

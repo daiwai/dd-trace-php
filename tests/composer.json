@@ -12,6 +12,8 @@
         "symfony/process": "<5",
         "g1a/composer-test-scenarios": "~3.0"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "scenarios": {
             "elasticsearch1": {

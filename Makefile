@@ -600,6 +600,31 @@ TEST_WEB_80 := \
 	test_web_yii_2 \
 	test_web_custom
 
+TEST_INTEGRATIONS_81 := \
+	test_integrations_deferred_loading \
+	test_integrations_curl \
+	test_integrations_mysqli \
+	test_integrations_pdo \
+	test_integrations_guzzle5 \
+	test_integrations_guzzle6 \
+	test_integrations_pcntl \
+	test_integrations_predis1 \
+	test_opentracing_10
+
+TEST_WEB_81 := \
+	test_metrics \
+	test_web_codeigniter_22 \
+	test_web_laravel_8x \
+	test_web_nette_24 \
+	test_web_nette_30 \
+	test_web_slim_312 \
+	test_web_slim_4 \
+	test_web_symfony_44 \
+	test_web_symfony_51 \
+	test_web_symfony_52 \
+	test_web_yii_2 \
+	test_web_custom
+
 FILTER := .
 
 define run_tests
@@ -625,6 +650,7 @@ clean_test_scenarios:
 $(TESTS_ROOT)/composer.lock: composer_tests_update
 
 composer_tests_update:
+	if [[ $(shell php -r 'echo PHP_VERSION_ID;') -ge 80100 ]]; then $(COMPOSER_TESTS) require --dev "phpspec/prophecy:dev-master as 1.14.0"; fi
 	$(COMPOSER_TESTS) update
 
 global_test_run_dependencies: install_all $(TESTS_ROOT)/composer.lock
